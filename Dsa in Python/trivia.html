@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Trivia</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #get-question-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #get-question-btn:hover {
+      background-color: #45a049;
+    }
+
+    #question-container {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Trivia</h1>
+  <button id="get-question-btn">Get Question</button>
+  <div id="question-container"></div>
+
+  <script>
+    // OpenTriviaDB API endpoint URL
+    const apiUrl = 'https://opentdb.com/api.php?amount=1';
+
+    // Handle button click
+    $('#get-question-btn').click(function () {
+      getQuestion();
+    });
+
+    // Fetch a random trivia question from the OpenTriviaDB API
+    function getQuestion() {
+      $.getJSON(apiUrl, function (data) {
+        displayQuestion(data.results[0]);
+      }).fail(function () {
+        $('#question-container').text('Unable to fetch question.');
+      });
+    }
+
+    // Display question on the webpage
+    function displayQuestion(question) {
+      const questionHtml = `
+        <h2>${question.category}</h2>
+        <p>${question.question}</p>
+        <p>Correct Answer: ${question.correct_answer}</p>
+      `;
+      $('#question-container').html(questionHtml);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Images</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #get-image-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #get-image-btn:hover {
+      background-color: #45a049;
+    }
+
+    #image-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Images</h1>
+  <button id="get-image-btn">Get Image</button>
+  <div id="image-container"></div>
+
+  <script>
+    // Unsplash API endpoint URL
+    const apiUrl = 'https://api.unsplash.com/photos/random?client_id=Bxoq2UwB8WUw6gWfYdvj3spqm-nKjsSYNKF2ZCGyKDQ';
+
+    // Handle button click
+    $('#get-image-btn').click(function () {
+      getImage();
+    });
+
+    // Fetch a random image from the Unsplash API
+    function getImage() {
+      $.getJSON(apiUrl, function (data) {
+        displayImage(data.urls.regular);
+      }).fail(function () {
+        $('#image-container').html('<p>Unable to fetch image.</p>');
+      });
+    }
+
+    // Display image on the webpage
+    function displayImage(imageUrl) {
+      const imageHtml = `<img src="${imageUrl}" alt="Random Image">`;
+      $('#image-container').html(imageHtml);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Dog Images</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #get-dog-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #get-dog-btn:hover {
+      background-color: #45a049;
+    }
+
+    #dog-image-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Dog Images</h1>
+  <button id="get-dog-btn">Get Dog Image</button>
+  <div id="dog-image-container"></div>
+
+  <script>
+    // Dog CEO's Dog API endpoint URL
+    const apiUrl = 'https://dog.ceo/api/breeds/image/random';
+
+    // Handle button click
+    $('#get-dog-btn').click(function () {
+      getDogImage();
+    });
+
+    // Fetch a random dog image from the Dog API
+    function getDogImage() {
+      $.getJSON(apiUrl, function (data) {
+        displayDogImage(data.message);
+      }).fail(function () {
+        $('#dog-image-container').html('<p>Unable to fetch dog image.</p>');
+      });
+    }
+
+    // Display dog image on the webpage
+    function displayDogImage(imageUrl) {
+      const imageHtml = `<img src="${imageUrl}" alt="Random Dog Image">`;
+      $('#dog-image-container').html(imageHtml);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Jokes</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #get-joke-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #get-joke-btn:hover {
+      background-color: #45a049;
+    }
+
+    #joke-container {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Jokes</h1>
+  <button id="get-joke-btn">Get Joke</button>
+  <div id="joke-container"></div>
+
+  <script>
+    // JokeAPI endpoint URL
+    const apiUrl = 'https://v2.jokeapi.dev/joke/Any';
+
+    // Handle button click
+    $('#get-joke-btn').click(function () {
+      getJoke();
+    });
+
+    // Fetch a random joke from JokeAPI
+    function getJoke() {
+      $.getJSON(apiUrl, function (data) {
+        displayJoke(data.setup, data.delivery);
+      }).fail(function () {
+        $('#joke-container').text('Unable to fetch joke.');
+      });
+    }
+
+    // Display joke on the webpage
+    function displayJoke(setup, delivery) {
+      const jokeHtml = `
+        <p>${setup}</p>
+        <p>${delivery}</p>
+      `;
+      $('#joke-container').html(jokeHtml);
+    }
+  </script>
+</body>
+</html>

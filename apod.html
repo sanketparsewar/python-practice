@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Astronomy Picture of the Day</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #get-picture-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #get-picture-btn:hover {
+      background-color: #45a049;
+    }
+
+    #picture-container {
+      margin-top: 20px;
+    }
+
+    #picture-container img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Astronomy Picture of the Day</h1>
+  <button id="get-picture-btn">Get Picture</button>
+  <div id="picture-container"></div>
+
+  <script>
+    // APOD API endpoint URL
+    const apiUrl = 'https://api.nasa.gov/planetary/apod';
+    const apiKey = 'f2QZMIukxRq1Hl0NQHZcmUuJ12XuR2DhMctOgZYi';
+
+    // Handle button click
+    $('#get-picture-btn').click(function () {
+      getPicture();
+    });
+
+    // Fetch a random astronomy picture from the APOD API
+    function getPicture() {
+      const url = `${apiUrl}?api_key=${apiKey}`;
+      $.getJSON(url, function (data) {
+        displayPicture(data.url);
+      }).fail(function () {
+        $('#picture-container').html('<p>Unable to fetch picture.</p>');
+      });
+    }
+
+    // Display picture on the webpage
+    function displayPicture(pictureUrl) {
+      const pictureHtml = `<img src="${pictureUrl}" alt="Astronomy Picture of the Day">`;
+      $('#picture-container').html(pictureHtml);
+    }
+  </script>
+</body>
+</html>

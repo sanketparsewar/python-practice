@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Users</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #get-user-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #get-user-btn:hover {
+      background-color: #45a049;
+    }
+
+    #user-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Users</h1>
+  <button id="get-user-btn">Get User</button>
+  <div id="user-container"></div>
+
+  <script>
+    // Random User Generator API endpoint URL
+    const apiUrl = 'https://randomuser.me/api/';
+
+    // Handle button click
+    $('#get-user-btn').click(function () {
+      getUser();
+    });
+
+    // Fetch a random user from the Random User Generator API
+    function getUser() {
+      $.getJSON(apiUrl, function (data) {
+        const user = data.results[0];
+        displayUser(user);
+      }).fail(function () {
+        $('#user-container').html('<p>Unable to fetch user information.</p>');
+      });
+    }
+
+    // Display user information on the webpage
+    function displayUser(user) {
+      const userHtml = `
+        <img src="${user.picture.large}" alt="User Image">
+        <h2>${user.name.first} ${user.name.last}</h2>
+        <p>Email: ${user.email}</p>
+        <p>Username: ${user.login.username}</p>
+        <p>Location: ${user.location.city}, ${user.location.country}</p>
+      `;
+      $('#user-container').html(userHtml);
+    }
+  </script>
+</body>
+</html>

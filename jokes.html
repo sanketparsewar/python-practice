@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chuck Norris Jokes</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #get-joke-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    #get-joke-btn:hover {
+      background-color: #45a049;
+    }
+
+    #joke-container {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chuck Norris Jokes</h1>
+  <button id="get-joke-btn">Get Joke</button>
+  <div id="joke-container"></div>
+
+  <script>
+    // Chuck Norris API endpoint URL
+    const apiUrl = 'https://api.chucknorris.io/jokes/random';
+
+    // Handle button click
+    $('#get-joke-btn').click(function () {
+      getJoke();
+    });
+
+    // Fetch a random Chuck Norris joke
+    function getJoke() {
+      $.getJSON(apiUrl, function (data) {
+        displayJoke(data.value);
+      }).fail(function () {
+        $('#joke-container').text('Unable to fetch joke.');
+      });
+    }
+
+    // Display joke on the webpage
+    function displayJoke(joke) {
+      $('#joke-container').text(joke);
+    }
+  </script>
+</body>
+</html>
